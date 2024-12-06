@@ -10,13 +10,14 @@
 
 	# Makes sense for user specific applications that shouldn't be available system-wide
 	home.packages = [
+		pkgs.wezterm
 	];
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
 	# plain files is through 'home.file'.
 	home.file = {
 		# ".zshrc".source = ~/dotfiles/zshrc/.zshrc;
-		# ".config/wezterm".source = ~/dotfiles/wezterm;
+		".config/wezterm".source = /Users/gdenys/dotfiles/wezterm;
 		# ".config/skhd".source = ~/dotfiles/skhd;
 		# ".config/starship".source = ~/dotfiles/starship;
 		# ".config/zellij".source = ~/dotfiles/zellij;
