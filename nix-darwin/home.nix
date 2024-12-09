@@ -31,6 +31,8 @@
 		# ".config/ghostty".source = /Users/gdenys/dotfiles/ghostty;
 		# ".config/aerospace".source = /Users/gdenys/dotfiles/aerospace;
 		# ".config/sketchybar".source = /Users/gdenys/dotfiles/sketchybar;
+		# Shells
+		".config/bash".source = "/Users/gdenys/dotfiles/bash";
 		".config/nushell".source = "/Users/gdenys/dotfiles/nushell";
 		".config/zsh".source = "/Users/gdenys/dotfiles/zsh";
 	};
