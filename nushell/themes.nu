@@ -135,4 +135,4 @@ let light_theme = {
     shape_raw_string: light_purple
 }
 
-echo ">>>> themes.nu loaded"
+echo "\n>>>> themes.nu loaded\n"

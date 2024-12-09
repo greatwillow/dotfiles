@@ -763,5 +763,5 @@ $env.config = {
     ]
 }
 
-echo ">>>> config.nu loaded"
+echo "\n>>>> config.nu loaded\n"
 

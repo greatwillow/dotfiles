@@ -6,7 +6,7 @@ alias .... = cd ../../..
 alias ..... = cd ../../../..
 alias ~ = cd ~ # `cd` is probably faster to type though
 
-alias ndarwin = cd ~/.config/nix-darwin
+alias ndarwin = cd ~/dotfiles/nix-darwin
 
 def --env cx [arg] {
     cd $arg
@@ -24,15 +24,24 @@ alias gcm = git commit -m
 alias gaa = git add -A
 alias gf = git fetch
 
+def set-xdg-home [] {
+    $env.XDG_CONFIG_HOME = ($env.HOME + "/.config")
+	echo $env.XDG_CONFIG_HOME
+}
+
 # Nix
 def nix-refresh [] {
     ndarwin
+	set-xdg-home
     with-env {NIX_DEBUG: "1"} { darwin-rebuild switch --flake . }
 }
 
 def nix-refresh-impure [] {
     ndarwin
+	set-xdg-home
     with-env {NIX_DEBUG: "1"} { darwin-rebuild switch --impure --flake . }
 }
 
-echo ">>>> aliases.nu loaded"
+set-xdg-home
+
+echo "\n>>>> aliases.nu loaded\n"
