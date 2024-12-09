@@ -12,6 +12,7 @@
 	home.packages = [
 		pkgs.wezterm
 		pkgs.nushell
+		pkgs.zsh
 	];
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -31,6 +32,7 @@
 		# ".config/aerospace".source = /Users/gdenys/dotfiles/aerospace;
 		# ".config/sketchybar".source = /Users/gdenys/dotfiles/sketchybar;
 		".config/nushell".source = "/Users/gdenys/dotfiles/nushell";
+		".config/zsh".source = "/Users/gdenys/dotfiles/zsh";
 	};
 
 	home.sessionVariables = {
