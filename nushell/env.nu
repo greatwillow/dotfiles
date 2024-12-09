@@ -102,3 +102,4 @@ path add /run/current-system/sw/bin
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 
+echo ">>>> env.nu loaded"
