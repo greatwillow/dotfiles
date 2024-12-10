@@ -36,6 +36,7 @@ alias gs="git status"
 alias gcm="git commit -m"
 alias gaa="git add -A"
 alias gf="git fetch"
+alias gss="git stash save"
 alias gcob="git branch | fzf | xargs git checkout" # checkout branch using fzf
 
 # navigation - mac

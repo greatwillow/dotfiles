@@ -23,6 +23,7 @@ alias gs = git status
 alias gcm = git commit -m
 alias gaa = git add -A
 alias gf = git fetch
+alias gss = git stash save
 
 def set-xdg-home [] {
     $env.XDG_CONFIG_HOME = ($env.HOME + "/.config")
