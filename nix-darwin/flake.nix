@@ -39,7 +39,7 @@
 		# $ darwin-rebuild changelog
 
 		users.users.gdenys.home = "/Users/gdenys";
-		# home-manager.backupFileExtension = "backup";
+		home-manager.backupFileExtension = "backup";
 		nix.configureBuildUsers = true;
 		nix.useDaemon = true;
 
