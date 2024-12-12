@@ -1,7 +1,7 @@
 # home.nix
 # home-manager switch 
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 	home.username = "gdenys";
@@ -13,7 +13,9 @@
 		pkgs.wezterm
 		pkgs.nushell
 		pkgs.zsh
-	];
+		pkgs.oh-my-posh
+		pkgs.nerd-fonts.meslo-lg
+	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
 	# plain files is through 'home.file'.
@@ -31,11 +33,18 @@
 		# ".config/ghostty".source = /Users/gdenys/dotfiles/ghostty;
 		# ".config/aerospace".source = /Users/gdenys/dotfiles/aerospace;
 		# ".config/sketchybar".source = /Users/gdenys/dotfiles/sketchybar;
+		# Prompt
+		".config/oh-my-posh".source = "/Users/gdenys/dotfiles/oh-my-posh";
 		# Shells
 		".config/bash".source = "/Users/gdenys/dotfiles/bash";
 		".config/nushell".source = "/Users/gdenys/dotfiles/nushell";
 		".config/zsh".source = "/Users/gdenys/dotfiles/zsh";
 	};
+
+	# This is needed to ensure that the font cache is updated after the fonts are installed.
+	home.activation.updateFontCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
+		fc-cache -fv
+	'';
 
 	home.sessionVariables = {
 	};

@@ -79,7 +79,7 @@ alias list-npm-globals="npm list -g --depth=0" # List out all globally installed
 # https://github.com/sindresorhus/trash-cli
 # You can empty the trash using the empty-trash command
 # https://github.com/sindresorhus/empty-trash-cli
-alias rm="trash"
+# alias rm="trash"
 
 # TODO: try this -> From: https://github.com/ngshiheng/dotfiles/blob/main/dot_aliases
 # alias fp='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'

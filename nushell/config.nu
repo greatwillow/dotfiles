@@ -763,5 +763,7 @@ $env.config = {
     ]
 }
 
-echo "\n>>>> config.nu loaded\n"
+# Oh my Posh
+source ~/oh-my-posh-init.nu
 
+# echo "\n>>>> config.nu loaded\n"

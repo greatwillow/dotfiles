@@ -98,6 +98,10 @@ use std "path add"
 # $env.PATH = ($env.PATH | uniq)
 path add /opt/homebrew/bin
 path add /run/current-system/sw/bin
+path add ~/.nix-profile/bin
+
+# Oh My Posh
+oh-my-posh init nu --config ~/.config/oh-my-posh/themes/catppuccin_mocha.omp.json --print | save ~/oh-my-posh-init.nu --force
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
