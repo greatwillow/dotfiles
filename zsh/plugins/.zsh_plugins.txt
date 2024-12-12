@@ -15,7 +15,6 @@ olets/zsh-abbr    kind:defer
 #   with prompt plugins, remember to add this to your .zshrc:
 #   `autoload -Uz promptinit && promptinit && prompt pure`
 # sindresorhus/pure     kind:fpath
-# romkatv/powerlevel10k kind:fpath
 
 # other plugins
 zsh-users/zsh-syntax-highlighting

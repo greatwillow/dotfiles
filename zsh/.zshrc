@@ -9,25 +9,11 @@ ANTIDOTE_CONFIG_DIRECTORY="$BASE_CONFIG_DIRECTORY/antidote"
 NIX_SHELL_CONFIG_PATH="~/.nix-profile/etc/profile.d/nix.sh"
 ASDF_CONFIG_DIRECTORY="$HOME/.config/asdf"
 ASDF_SHELL_CONFIG_PATH="$ASDF_CONFIG_DIRECTORY/asdf.sh"
-POWERLEVEL10K_CONFIG_DIRECTORY="$BASE_CONFIG_DIRECTORY/powerlevel10k"
-
-# The following line would be needed ABOVE the powerlevel script below to enable direnv
-# (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 # Source Nix profile to add Nix-installed binaries to PATH
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
-
-# The following line would be needed BELOW the powerlevel script above to enable direnv
-# (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # Antidote -> https://getantidote.github.io/
 # clone antidote if necessary
@@ -67,6 +53,7 @@ fi
 # Completions
 autoload -U compinit; compinit	# Activates completions
 
-# Import PowerLevel10k -> To customize prompt, run `p10k configure` or edit ~/p10k.zsh.
-[ ! -f $POWERLEVEL10K_CONFIG_DIRECTORY/p10k.zsh ] || source $POWERLEVEL10K_CONFIG_DIRECTORY/p10k.zsh
-[ ! -f $POWERLEVEL10K_CONFIG_DIRECTORY/powerlevel10k.zsh-theme ] || source $POWERLEVEL10K_CONFIG_DIRECTORY/powerlevel10k.zsh-theme
+# Oh My Posh
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh)"
+fi
