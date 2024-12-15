@@ -50,7 +50,6 @@ in
 		# Prompt
 		".config/oh-my-posh".source = "${dotfilesPath}/oh-my-posh";
 		# Shells
-		".config/bash".source = "${dotfilesPath}/bash";
 		".config/nushell".source = "${dotfilesPath}/nushell";
 	};
 
@@ -104,6 +103,7 @@ in
 		lazygit = {
 			enable = true;
 		};	
+		bash = (import "${dotfilesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
 		zsh = (import "${dotfilesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
 	};
 }

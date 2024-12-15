@@ -38,7 +38,6 @@
     "...." = "cd ../../..";
     "....." = "cd ../../../..";
     "~" = "cd ~"; # `cd` is probably faster to type though
-    "-" = "cd -";
     c = "clear";
     cat = "bat --paging=never";
     # Always enable colored `grep` output
