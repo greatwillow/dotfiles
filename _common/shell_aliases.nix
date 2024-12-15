@@ -32,13 +32,76 @@
     # alias src=". ~/.bashrc"
 
     # -------------------- Navigation --------------------
-      ".." = "cd ..";
-      "..." = "cd ..; cd ..";
-      c = "clear";
-      cat = "bat";
-      zel = "${pkgs.zellij}/bin/zellij";
+    ".." = "cd ..";
+    "cd.." = "cd ..";
+    "..." = "cd ../..";
+    "...." = "cd ../../..";
+    "....." = "cd ../../../..";
+    "~" = "cd ~"; # `cd` is probably faster to type though
+    "-" = "cd -";
+    c = "clear";
+    cat = "bat --paging=never";
+    # Always enable colored `grep` output
+    # Note: `GREP_OPTIONS=\"--color=auto\"` is deprecated, hence the alias usage.
+    grep = "grep --color=auto";
+
+    # -------------------- Filesystem --------------------
+    nnotes = "cd $HOME/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/ObsidianNotes";
+    ncomp = "cd $HOME/Desktop/Comp\\ Sci";
+    ndesk = "cd $HOME/Desktop";
+
+    # -------------------- List Files --------------------
+    ls = "eza";
+    ll = "eza -l";
+    la = "eza -a";
+    lt = "eza --tree";
+    lla = "eza -la";
+
+    # -------------------- Manage Files --------------------
+    md = "mkdir -p";
+    mv = "mv -i";
+    cp = "cp -v";
+    rm = "rm -i -v";
+    sdn = "sudo shutdown -h now";
+    shutdown = "umount -R /mnt/ ; sudo shutdown -h now";
+
+    # -------------------- System --------------------
+    # Lock the screen (when going AFK)
+    afk = "/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend";
+
+    # Show/hide hidden files in Finder
+    show = "defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder";
+    hide = "defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder";
+
+    # Print each PATH entry on a separate line
+    path = "echo -e $(echo $PATH | tr ':' '\\n')";
+
+    # -------------------- Shell --------------------
+    # Reload the shell (i.e. invoke as a login shell)
+    reload = "exec ${builtins.getEnv "SHELL"} -l";
+
+    # -------------------- Editor --------------------
+    vim = "${editor}"; # use neovim instead of vim
+    vimrc = "vim ${builtins.getEnv "HOME"}/.config/nvim/init.vim"; # open vim config from anywhere
+    vimdiff = "${editor} -d";
+    x = "exit";
+
+    # -------------------- Specific Programs --------------------
+    # Zellij
+    zel = "${pkgs.zellij}/bin/zellij";
+
+    # npm 
+    list-npm-globals = "npm list -g --depth=0"; # List out all globally installed npm packages
+
+    # Ensures that opening nushell will point to the correct config file    
+    nu = "nu --config ~/.config/nushell/config.nu";
+
+    # Youtube
+    yt-dl = "yt-dlp --format \"bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best\" --merge-output-format mp4";
+    ytplaylist = "yt-dlp -i -f mp3 --yes-playlist --add-metadata";
 
     # -------------------- Git --------------------
+    lg = "lazygit";
     gs = "git status";
     gaa = "git add -A";
     gcm = ''
@@ -155,25 +218,6 @@
       # gpl = "git pull";
       # gpu = "git push upstream";
       # gpv = "git push --verbose";
-    # -------------------- List Files --------------------
-    lg = "lazygit";
-    ls = "eza";
-    ll = "eza -l";
-    la = "eza -a";
-    lt = "eza --tree";
-    lla = "eza -la";
-    # -------------------- Manage Files --------------------
-    md = "mkdir -p";
-    mv = "mv -i";
-    sdn = "sudo shutdown -h now";
-    shutdown = "umount -R /mnt/ ; sudo shutdown -h now";
-    # -------------------- Editor --------------------
-    vim = "${editor}";
-    vimdiff = "${editor} -d";
-    x = "exit";
-    # -------------------- Youtube --------------------
-    yt-dl = "yt-dlp --format \"bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best\" --merge-output-format mp4";
-    ytplaylist = "yt-dlp -i -f mp3 --yes-playlist --add-metadata";
 };
 in {
     shellAliases = shellAliases;
