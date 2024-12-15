@@ -2,8 +2,11 @@
 # home-manager switch 
 # See Home Manager Options at: https://nix-community.github.io/home-manager/options.xhtml
 
-{ config, pkgs, lib, ... }:
-
+{ config, pkgs, lib, ... }: let
+	dotfilesPath = "/Users/gdenys/dotfiles";
+	rootConfigPath = "/Users/gdenys/.config";
+  	shellAliases = (import "${dotfilesPath}/_common/shell_aliases.nix" { inherit pkgs; }).shellAliases;
+in 
 {
 	home.username = "gdenys";
 	home.homeDirectory = "/Users/gdenys";
@@ -17,6 +20,8 @@
 		pkgs.oh-my-posh
 		pkgs.nerd-fonts.meslo-lg
 		pkgs.bat
+		pkgs.eza
+		pkgs.lazygit
 	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -40,7 +45,6 @@
 		# Shells
 		".config/bash".source = "/Users/gdenys/dotfiles/bash";
 		".config/nushell".source = "/Users/gdenys/dotfiles/nushell";
-		# ".config/zsh".source = "/Users/gdenys/dotfiles/zsh";
 	};
 
 	# This is needed to ensure that the font cache is updated after the fonts are installed.
@@ -56,31 +60,16 @@
 		"$HOME/.nix-profile/bin"
 	];
 
-	programs.zsh = {
-		enable = true;
-		enableCompletion = true;
-		syntaxHighlighting.enable = true;
-		syntaxHighlighting.highlighters = [
-			"main"
-			"brackets"
-		];
-
-		history = {
-			size = 10000;
+	programs = {
+		home-manager = {
+			enable = true;
+		};	
+		eza = {
+			enable = true;
 		};
-
-		antidote.enable = true;
-		antidote.plugins = [
-				"zsh-users/zsh-autosuggestions"
-				"jeffreytse/zsh-vi-mode"
-		];		
-		
-		initExtra = ''
-			if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-				eval "$(oh-my-posh init zsh)"
-			fi
-		'';
+		lazygit = {
+			enable = true;
+		};	
+		zsh = (import "${dotfilesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
 	};
-
-	programs.home-manager.enable = true;
 }
