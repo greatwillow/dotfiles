@@ -16,7 +16,7 @@
 		];
 		shellAliases = shellAliases;	
 		history = {
-			size = 10000;
+			size = 100000;
 			# substringSearch.enable = true;
 		};
 		antidote.enable = true;
