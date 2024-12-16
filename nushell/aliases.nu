@@ -11,13 +11,24 @@ alias ncomp = cd "~/Desktop/Comp\\ Sci"
 alias ndesk = cd "~/Desktop"
 alias ndarwin = cd "~/dotfiles/nix-darwin"
 
+# -------------------- List Files --------------------
+alias l = eza -l --icons --git -a
+alias ls =  eza
+alias ll =  eza -l
+alias la =  eza -a
+alias lla = eza -la
+alias lt = eza --tree --level=2 --long --icons --git
+alias ltree = eza --tree --level=2  --icons --git
+
 def --env cx [arg] {
     cd $arg
     ls -l
 }
+# -------------------- Manage Files --------------------
 
 # mv, rm, cp
-alias mv = mv -v
+alias md = mkdir
+alias mv = mv -i -v
 alias rm = rm -i -v
 alias cp = cp -v
 

@@ -760,7 +760,10 @@ $env.config = {
     ]
 }
 
-# # Carapace
+# Carapace
 source ~/.cache/carapace/init.nu
+
+# Oh My Posh
+source ~/oh-my-posh-init.nu
 
 # echo "\n>>>> config.nu loaded\n"

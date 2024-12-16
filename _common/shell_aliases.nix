@@ -29,11 +29,13 @@
     ndarwin = "cd $HOME/dotfiles/nix-darwin";
 
     # -------------------- List Files --------------------
+    l = "eza -l --icons --git -a";
     ls = "eza";
     ll = "eza -l";
     la = "eza -a";
-    lt = "eza --tree";
     lla = "eza -la";
+    lt = "eza --tree --level=2 --long --icons --git";
+    ltree = "eza --tree --level=2  --icons --git";
 
     # -------------------- Manage Files --------------------
     md = "mkdir -p";
