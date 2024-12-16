@@ -2,14 +2,11 @@
 #
 # version = "0.95.0"
 
-# Import environment variables
-source ~/.config/nushell/env.nu
-
-# Import aliases
-source ~/.config/nushell/aliases.nu
+# # Import aliases
+source ~/dotfiles/nushell/aliases.nu
 
 # Import themes
-source ~/.config/nushell/themes.nu
+source ~/dotfiles/nushell/themes.nu
 
 $env.config = {
     show_banner: false
@@ -763,7 +760,7 @@ $env.config = {
     ]
 }
 
-# Oh my Posh
-source ~/oh-my-posh-init.nu
+# # Carapace
+source ~/.cache/carapace/init.nu
 
 # echo "\n>>>> config.nu loaded\n"

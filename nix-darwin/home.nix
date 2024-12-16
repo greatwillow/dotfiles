@@ -7,10 +7,10 @@
 	dotfilesPath = "${userPath}/dotfiles";
 	rootConfigPath = "${userPath}/.config";
 	customPosixScriptsPath = "${rootConfigPath}/_common/posix_custom_scripts";
-	osType = builtins.getEnv "OSTYPE";
-	isMacOS = lib.strings.hasPrefix "darwin" osType;
-	isLinuxOS = lib.strings.hasPrefix "linux" osType;
-	isWindowsOS = lib.strings.hasPrefix "msys" osType || lib.strings.hasPrefix "cygwin" osType;
+	osType = builtins.currentSystem;
+	isMacOS = lib.strings.hasPrefix "x86_64-darwin" osType;
+	isLinuxOS = lib.strings.hasPrefix "x86_64-linux" osType;
+	isWindowsOS = lib.strings.hasPrefix "x86_64-windows" osType;
 
   	shellAliases = (import "${dotfilesPath}/_common/shell_aliases.nix" { inherit pkgs; }).shellAliases;
   	sessionVariables = (import "${dotfilesPath}/_common/session_variables.nix" { inherit pkgs rootConfigPath isMacOS isLinuxOS isWindowsOS; }).sessionVariables;
@@ -30,6 +30,7 @@ in
 		pkgs.bat
 		pkgs.eza
 		pkgs.lazygit
+		pkgs.carapace
 	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -47,10 +48,6 @@ in
 		# ".config/ghostty".source = "${dotfilesPath}/ghostty";
 		# ".config/aerospace".source = "${dotfilesPath}/aerospace";
 		# ".config/sketchybar".source = "${dotfilesPath}/sketchybar";
-		# Prompt
-		".config/oh-my-posh".source = "${dotfilesPath}/oh-my-posh";
-		# Shells
-		".config/nushell".source = "${dotfilesPath}/nushell";
 	};
 
 	# This is needed to ensure that the font cache is updated after the fonts are installed.
@@ -79,7 +76,28 @@ in
 		lazygit = {
 			enable = true;
 		};	
+		carapace = {
+			enable = true;
+			enableNushellIntegration = true;
+			enableZshIntegration = true;
+			enableBashIntegration = true;
+		};
+		oh-my-posh = {
+			enable = true;
+			enableZshIntegration = true;
+			enableBashIntegration = true;
+			enableNushellIntegration = true;
+		};
 		bash = (import "${dotfilesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
 		zsh = (import "${dotfilesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
+		nushell = {
+			enable = true;
+			envFile = {
+				source = "${dotfilesPath}/nushell/env.nu";
+			};
+			configFile = {
+				source = "${dotfilesPath}/nushell/config.nu";
+			};
+		};
 	};
 }

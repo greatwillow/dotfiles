@@ -93,7 +93,7 @@
     list-npm-globals = "npm list -g --depth=0"; # List out all globally installed npm packages
 
     # Ensures that opening nushell will point to the correct config file    
-    nu = "nu --config ~/.config/nushell/config.nu";
+    nu = "nu --config ~/dotfiles/nushell/config.nu";
 
     # Youtube
     yt-dl = "yt-dlp --format \"bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best\" --merge-output-format mp4";
