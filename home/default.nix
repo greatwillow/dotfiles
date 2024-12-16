@@ -6,15 +6,16 @@
 	user = "gdenys";
 	userPath = config.home.homeDirectory;
 	dotfilesPath = "${userPath}/dotfiles";
+	homeManagerModulesPath = "${dotfilesPath}/home/modules";
 	rootConfigPath = "${userPath}/.config";
-	customPosixScriptsPath = "${rootConfigPath}/_common/posix_custom_scripts";
+	customPosixScriptsPath = "${homeManagerModulesPath}/_common/posix_custom_scripts";
 	osType = builtins.currentSystem;
 	isMacOS = lib.strings.hasPrefix "x86_64-darwin" osType;
 	isLinuxOS = lib.strings.hasPrefix "x86_64-linux" osType;
 	isWindowsOS = lib.strings.hasPrefix "x86_64-windows" osType;
 
-  	shellAliases = (import "${dotfilesPath}/_common/shell_aliases.nix" { inherit pkgs; }).shellAliases;
-  	sessionVariables = (import "${dotfilesPath}/_common/session_variables.nix" { inherit pkgs rootConfigPath isMacOS isLinuxOS isWindowsOS; }).sessionVariables;
+  	shellAliases = (import "${homeManagerModulesPath}/_common/shell_aliases.nix" { inherit pkgs; }).shellAliases;
+  	sessionVariables = (import "${homeManagerModulesPath}/_common/session_variables.nix" { inherit pkgs rootConfigPath isMacOS isLinuxOS isWindowsOS; }).sessionVariables;
 in 
 {
 	home.username = "gdenys";
@@ -42,7 +43,7 @@ in
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
 	# plain files is through 'home.file'.
 	home.file = {
-		".config/_common".source = "${dotfilesPath}/_common";
+		# ".config/_common".source = "${homeManagerModulesPath}/_common";
 		".config/wezterm".source = "${dotfilesPath}/wezterm";
 		# ".config/skhd".source = "${dotfilesPath}/skhd";
 		# ".config/starship".source = "${dotfilesPath}/starship";
@@ -107,15 +108,15 @@ in
 			enableBashIntegration = true;
 			enableNushellIntegration = true;
 		};
-		bash = (import "${dotfilesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
-		zsh = (import "${dotfilesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
+		bash = (import "${homeManagerModulesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
+		zsh = (import "${homeManagerModulesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
 		nushell = {
 			enable = true;
 			envFile = {
-				source = "${dotfilesPath}/nushell/env.nu";
+				source = "${homeManagerModulesPath}/nushell/env.nu";
 			};
 			configFile = {
-				source = "${dotfilesPath}/nushell/config.nu";
+				source = "${homeManagerModulesPath}/nushell/config.nu";
 			};
 		};
 		# neovim = {

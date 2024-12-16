@@ -61,7 +61,7 @@
     	darwinPackages = self.darwinConfigurations.artemis.pkgs;
 
 		defaultPackage.${system} = if isMacOS then self.darwinConfigurations.artemis
-			else if isLinuxOS then nixosConfigurations.my-linux-config
+			else if isLinuxOS then self.nixosConfigurations.my-linux-config
 			else throw "Unsupported system: ${system}";
 		};
 }
