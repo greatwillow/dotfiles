@@ -49,7 +49,7 @@ in
 		# ".config/zellij".source = "${dotfilesPath}/zellij";
 		# ".config/nvim".source = "${dotfilesPath}/nvim";
 		".config/nix".source = "${dotfilesPath}/nix";
-		".config/nix-darwin".source = "${dotfilesPath}/nix-darwin";
+		# ".config/nix-darwin".source = "${dotfilesPath}/nix-darwin";
 		# ".config/tmux".source = "${dotfilesPath}/tmux";
 		# ".config/ghostty".source = "${dotfilesPath}/ghostty";
 		# ".config/aerospace".source = "${dotfilesPath}/aerospace";
@@ -62,12 +62,12 @@ in
 	'';
 
 	# Ensure the Neovim directory exists and has the correct permissions
-	home.activation.ensureNvimDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
-		# TODO: The following commands are not working as expected. Need to investigate.
-		# sudo mkdir -p ${userPath}/.local/share/nvim
-		# chown ${user}:${user} ${userPath}/.local/share/nvim
-		# chmod 755 ${userPath}/.local/share/nvim
-	'';
+	# home.activation.ensureNvimDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+	# 	# TODO: The following commands are not working as expected. Need to investigate.
+	# 	# sudo mkdir -p ${userPath}/.local/share/nvim
+	# 	# chown ${user}:${user} ${userPath}/.local/share/nvim
+	# 	# chmod 755 ${userPath}/.local/share/nvim
+	# '';
 
 	home.sessionVariables = sessionVariables;
 
@@ -118,10 +118,9 @@ in
 				source = "${dotfilesPath}/nushell/config.nu";
 			};
 		};
-		neovim = {
-			enable = true;
-			plugins = with pkgs.vimPlugins; [
-			];
-		}
+		# neovim = {
+		# 	enable = true;
+		# 	# plugins = with pkgs.vimPlugins; [];
+		# };
 	};
 }
