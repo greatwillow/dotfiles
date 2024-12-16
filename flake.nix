@@ -22,6 +22,7 @@
 		isLinuxOS = lib.strings.hasPrefix "x86_64-linux" system;
 		isWindowsOS = lib.strings.hasPrefix "x86_64-windows" system;
 		artemisConfiguration = (import "${dotfilesPath}/hosts/artemis/default.nix" { inherit pkgs self; });
+		apolloConfiguration = (import "${dotfilesPath}/hosts/apollo/default.nix" { inherit pkgs self; });
   	in
 	{
 		# Build darwin flake using:
@@ -41,12 +42,26 @@
 			};
 		};
 
+		nixosConfigurations = {
+			my-linux-config = nixpkgs.lib.nixosSystem {
+				system = "x86_64-linux";
+				modules = [
+				apolloConfiguration
+				home-manager.nixosModules.home-manager
+				{
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.gdenys = import "${dotfilesPath}/home/default.nix";
+				}
+				];
+			};
+		};
+
 		# Expose the package set, including overlays, for convenience.
     	darwinPackages = self.darwinConfigurations.artemis.pkgs;
 
 		defaultPackage.${system} = if isMacOS then self.darwinConfigurations.artemis
-			# else if isLinuxOS then nixosConfigurations.my-linux-config
-			# else if isWindowsOS then windowsConfigurations.my-windows-config
+			else if isLinuxOS then nixosConfigurations.my-linux-config
 			else throw "Unsupported system: ${system}";
 		};
 }
