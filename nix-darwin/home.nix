@@ -31,6 +31,8 @@ in
 		pkgs.eza
 		pkgs.lazygit
 		pkgs.carapace
+		pkgs.ripgrep
+		pkgs.fzf
 	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -76,6 +78,11 @@ in
 		lazygit = {
 			enable = true;
 		};	
+		fzf = {
+			enable = true;
+			enableZshIntegration = true;
+			enableBashIntegration = true;
+		};
 		carapace = {
 			enable = true;
 			enableNushellIntegration = true;

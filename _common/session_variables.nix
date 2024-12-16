@@ -17,6 +17,8 @@
 		# XDG config home
 		XDG_CONFIG_HOME = "${rootConfigPath}";
 		# FZF
+		# Here we are using `rg` (ripgrep) as the default command for `fzf`
+		# If we comment out this line and run `fzf` in the terminal, it will use `find` as the default command
 		FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git'";
 		FZF_DEFAULT_OPTS = "--height=40% --layout=reverse --border --margin=1 --padding=1";
 		# BAT

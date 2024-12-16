@@ -109,6 +109,7 @@
     gcob = "git checkout -b"; 
     gl = "git log";
     glog = "git log --oneline --graph";
+    gbl = "git branch --list";
     gpr = "git pull --rebase";
     gp = "git push";
     gpf = "git push --force-with-lease";

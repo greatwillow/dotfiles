@@ -31,6 +31,7 @@ alias gco = git checkout
 alias gcob = git checkout -b 
 alias gl = git log
 alias glog = git log --oneline --graph
+alias gbl = git branch --list
 alias gpr = git pull --rebase
 alias gp = git push
 alias gpf = git push --force-with-lease
