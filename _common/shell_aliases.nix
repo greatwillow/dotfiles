@@ -26,7 +26,7 @@
     nnotes = "cd $HOME/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/ObsidianNotes";
     ncomp = "cd $HOME/Desktop/Comp\\ Sci";
     ndesk = "cd $HOME/Desktop";
-    ndarwin = "cd $HOME/dotfiles/nix-darwin";
+    ndot = "cd $HOME/dotfiles";
 
     # -------------------- List Files --------------------
     l = "eza -l --icons --git -a";

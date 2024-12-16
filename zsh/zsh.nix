@@ -29,13 +29,13 @@
 			fi
 
 			function refresh-pure {
-				cd ~/dotfiles/nix-darwin
+				cd ~/dotfiles
 				export NIX_DEBUG=1
 				darwin-rebuild switch --flake .
 			}
 
 			function refresh {
-				cd ~/dotfiles/nix-darwin
+				cd ~/dotfiles
 				export NIX_DEBUG=1
 				darwin-rebuild switch --impure --flake .
 			}

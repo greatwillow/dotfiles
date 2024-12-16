@@ -9,7 +9,7 @@ alias ~ = cd ~ # `cd` is probably faster to type though
 alias nnotes = cd "~/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/ObsidianNotes"
 alias ncomp = cd "~/Desktop/Comp\\ Sci"
 alias ndesk = cd "~/Desktop"
-alias ndarwin = cd "~/dotfiles/nix-darwin"
+alias ndot = cd "~/dotfiles"
 
 # -------------------- List Files --------------------
 alias l = eza -l --icons --git -a

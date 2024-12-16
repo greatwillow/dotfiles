@@ -1,5 +1,5 @@
 {
-	description = "My nix-darwin system flake";
+	description = "My multi-platform Nix configuration";
 
 	inputs = {
 		nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -31,9 +31,6 @@
 		# The platform the configuration will be used on.
 		nixpkgs.hostPlatform = "aarch64-darwin";
 		security.pam.enableSudoTouchIdAuth = true;
-
-		# Enable alternative shell support in nix-darwin.
-		# programs.fish.enable = true;
 		
 		# Used for backwards compatibility, please read the changelog before changing.
 		# $ darwin-rebuild changelog
@@ -50,7 +47,7 @@
 			finder.AppleShowAllFiles = true;
 			finder.FXPreferredViewStyle = "clmv";
 			loginwindow.LoginwindowText = "Welcome!";
-			screencapture.location = "~/Desktop/Screenshots2";
+			screencapture.location = "~/Desktop/Screenshots";
 			screensaver.askForPasswordDelay = 10;
 		};
     };
