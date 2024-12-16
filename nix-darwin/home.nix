@@ -19,22 +19,24 @@ in
 {
 	home.username = "gdenys";
 	home.homeDirectory = "/Users/gdenys";
-	home.stateVersion = "23.05"; # Please read the comment before changing.
+	# Define the state version, which corresponds to the version of Home Manager
+  	# you are using. This should be updated whenever you update Home Manager.
+	home.stateVersion = "23.05";
 
-	# Makes sense for user specific applications that shouldn't be available system-wide
-	home.packages = [
-		pkgs.wezterm
-		pkgs.nushell
-		pkgs.zsh
-		pkgs.oh-my-posh
-		pkgs.nerd-fonts.meslo-lg
-		pkgs.bat
-		pkgs.eza
-		pkgs.lazygit
-		pkgs.carapace
-		pkgs.ripgrep
-		pkgs.fzf
-		pkgs.neovim
+	# Specify the desired packages to install in the user environment.
+	home.packages = with pkgs; [
+		wezterm
+		nushell
+		zsh
+		oh-my-posh
+		nerd-fonts.meslo-lg
+		bat
+		eza
+		lazygit
+		carapace
+		ripgrep
+		fzf
+		neovim
 	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -116,5 +118,10 @@ in
 				source = "${dotfilesPath}/nushell/config.nu";
 			};
 		};
+		neovim = {
+			enable = true;
+			plugins = with pkgs.vimPlugins; [
+			];
+		}
 	};
 }
