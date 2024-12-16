@@ -2,24 +2,22 @@
 # home-manager switch 
 # See Home Manager Options at: https://nix-community.github.io/home-manager/options.xhtml
 
-{ config, pkgs, lib, ... }: let
-	user = "gdenys";
-	userPath = config.home.homeDirectory;
-	dotfilesPath = "${userPath}/dotfiles";
+{ config, pkgs, lib, homeUsername, homePath, ... }: let
+	dotfilesPath = "${homePath}/dotfiles";
 	homeManagerModulesPath = "${dotfilesPath}/home/modules";
-	rootConfigPath = "${userPath}/.config";
+	rootConfigPath = "${homeUsername}/.config";
 	customPosixScriptsPath = "${homeManagerModulesPath}/_common/posix_custom_scripts";
 	osType = builtins.currentSystem;
 	isMacOS = lib.strings.hasPrefix "x86_64-darwin" osType;
 	isLinuxOS = lib.strings.hasPrefix "x86_64-linux" osType;
 	isWindowsOS = lib.strings.hasPrefix "x86_64-windows" osType;
 
-  	shellAliases = (import "${homeManagerModulesPath}/_common/shell_aliases.nix" { inherit pkgs; }).shellAliases;
+  	shellAliases = (import "${homeManagerModulesPath}/_common/shell_aliases.nix" { inherit pkgs homeManagerModulesPath; }).shellAliases;
   	sessionVariables = (import "${homeManagerModulesPath}/_common/session_variables.nix" { inherit pkgs rootConfigPath isMacOS isLinuxOS isWindowsOS; }).sessionVariables;
 in 
 {
-	home.username = "gdenys";
-	home.homeDirectory = "/Users/gdenys";
+	home.username = homeUsername;
+	home.homeDirectory = homePath;
 	# Define the state version, which corresponds to the version of Home Manager
   	# you are using. This should be updated whenever you update Home Manager.
 	home.stateVersion = "23.05";
@@ -65,9 +63,9 @@ in
 	# Ensure the Neovim directory exists and has the correct permissions
 	# home.activation.ensureNvimDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
 	# 	# TODO: The following commands are not working as expected. Need to investigate.
-	# 	# sudo mkdir -p ${userPath}/.local/share/nvim
-	# 	# chown ${user}:${user} ${userPath}/.local/share/nvim
-	# 	# chmod 755 ${userPath}/.local/share/nvim
+	# 	# sudo mkdir -p ${homeUsername}/.local/share/nvim
+	# 	# chown ${user}:${user} ${homeUsername}/.local/share/nvim
+	# 	# chmod 755 ${homeUsername}/.local/share/nvim
 	# '';
 
 	home.sessionVariables = sessionVariables;
@@ -109,7 +107,7 @@ in
 			enableNushellIntegration = true;
 		};
 		bash = (import "${homeManagerModulesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
-		zsh = (import "${homeManagerModulesPath}/zsh/zsh.nix" { inherit pkgs shellAliases; }).zsh;
+		zsh = (import "${homeManagerModulesPath}/zsh/zsh.nix" { inherit pkgs shellAliases homeManagerModulesPath; }).zsh;
 		nushell = {
 			enable = true;
 			envFile = {

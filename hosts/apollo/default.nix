@@ -1,4 +1,4 @@
-{ pkgs, self, ... }: 
+{ pkgs, self, homePath, ... }: 
 
 {
 		# List packages installed in system profile. To search by name, run:
@@ -22,7 +22,7 @@
 	# Used for backwards compatibility, please read the changelog before changing.
 	# $ darwin-rebuild changelog
 
-	users.users.gdenys.home = "/Users/GregoryDenys";
+	users.users.GregoryDenys.home = homePath;
 	home-manager.backupFileExtension = "backup";
 	nix.configureBuildUsers = true;
 	nix.useDaemon = true;

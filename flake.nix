@@ -13,20 +13,25 @@
 
 	outputs = inputs@{ self, nixpkgs, home-manager, darwin, ... }:
 	let
-		userPath = "/Users/gdenys";
-		dotfilesPath = "${userPath}/dotfiles";
+		artemisUser = "gdenys";
+		apolloUser = "GregoryDenys";
+		artemisUserPath = "/Users/${artemisUser}";
+		apolloUserPath = "/c/Users/${apolloUser}";
+		artemisDotfilesPath = "${artemisUserPath}/dotfiles";
+		apolloDotfilesPath = "${apolloUserPath}/dotfiles";
 		system = builtins.currentSystem;
 		pkgs = import nixpkgs { inherit system; };
-		lib = pkgs.lib;
+		lib = {
+			inherit (pkgs.lib) strings;
+			inherit (home-manager.lib) hm;
+		};
 		isMacOS = lib.strings.hasPrefix "aarch64-darwin" system || lib.strings.hasPrefix "x86_64-darwin" system;
 		isLinuxOS = lib.strings.hasPrefix "x86_64-linux" system;
 		isWindowsOS = lib.strings.hasPrefix "x86_64-windows" system;
-		artemisConfiguration = (import "${dotfilesPath}/hosts/artemis/default.nix" { inherit pkgs self; });
-		apolloConfiguration = (import "${dotfilesPath}/hosts/apollo/default.nix" { inherit pkgs self; });
+		artemisConfiguration = (import "${artemisDotfilesPath}/hosts/artemis/default.nix" { inherit pkgs self; homePath = artemisUserPath; });
+		apolloConfiguration = (import "${apolloDotfilesPath}/hosts/apollo/default.nix" { inherit pkgs self; homePath = apolloUserPath; });
   	in
 	{
-		# Build darwin flake using:
-		# $ darwin-rebuild build --flake .#Gregorys-MacBook-Pro
 		darwinConfigurations = {
 			artemis = darwin.lib.darwinSystem {
 				system = "x86_64-darwin";
@@ -36,7 +41,14 @@
 					{
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
-						home-manager.users.gdenys = import "${dotfilesPath}/home/default.nix";
+						home-manager.users.gdenys = (
+							import "${artemisDotfilesPath}/home/default.nix" { 
+								config = artemisConfiguration; 
+								inherit pkgs lib; 
+								homeUsername = artemisUser; 
+								homePath = artemisUserPath; 
+							}
+						);
 					}
 				];
 			};
@@ -51,14 +63,18 @@
 				{
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.users.gdenys = import "${dotfilesPath}/home/default.nix";
+					home-manager.users.gdenys = (
+						import "${apolloDotfilesPath}/home/default.nix" { 
+							config = apolloConfiguration; 
+							inherit pkgs lib; 
+							homeUsername = apolloUser; 
+							homePath = apolloUserPath; 
+						}
+					);
 				}
 				];
 			};
 		};
-
-		# Expose the package set, including overlays, for convenience.
-    	darwinPackages = self.darwinConfigurations.artemis.pkgs;
 
 		defaultPackage.${system} = if isMacOS then self.darwinConfigurations.artemis
 			else if isLinuxOS then self.nixosConfigurations.my-linux-config

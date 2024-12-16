@@ -1,6 +1,7 @@
 {
   pkgs,
   shellAliases,
+	homeManagerModulesPath,
   ...
 }: 
 {
@@ -25,7 +26,7 @@
 		];	
 		initExtra = ''
 			if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-				eval "$(oh-my-posh init zsh --config ~/dotfiles/home/modules/oh-my-posh/themes/catppuccin_mocha.omp.json)"
+				eval "$(oh-my-posh init zsh --config ${homeManagerModulesPath}/oh-my-posh/themes/catppuccin_mocha.omp.json)"
 			fi
 
 			function refresh-pure {
