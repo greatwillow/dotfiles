@@ -44,17 +44,17 @@ in
 	# plain files is through 'home.file'.
 	home.file = {
 		# ".config/_common".source = "${homeManagerModulesPath}/_common";
-		".config/wezterm".source = "${dotfilesPath}/wezterm";
-		# ".config/skhd".source = "${dotfilesPath}/skhd";
-		# ".config/starship".source = "${dotfilesPath}/starship";
-		# ".config/zellij".source = "${dotfilesPath}/zellij";
-		# ".config/nvim".source = "${dotfilesPath}/nvim";
+		# ".config/wezterm".source = "${homeManagerModulesPath}/wezterm";
+		# ".config/skhd".source = "${homeManagerModulesPath}/skhd";
+		# ".config/starship".source = "${homeManagerModulesPath}/starship";
+		# ".config/zellij".source = "${homeManagerModulesPath}/zellij";
+		# ".config/nvim".source = "${homeManagerModulesPath}/nvim";
 		".config/nix".source = "${dotfilesPath}/nix";
-		# ".config/nix-darwin".source = "${dotfilesPath}/nix-darwin";
-		# ".config/tmux".source = "${dotfilesPath}/tmux";
-		# ".config/ghostty".source = "${dotfilesPath}/ghostty";
-		# ".config/aerospace".source = "${dotfilesPath}/aerospace";
-		# ".config/sketchybar".source = "${dotfilesPath}/sketchybar";
+		# ".config/nix-darwin".source = "${homeManagerModulesPath}/nix-darwin";
+		# ".config/tmux".source = "${homeManagerModulesPath}/tmux";
+		# ".config/ghostty".source = "${homeManagerModulesPath}/ghostty";
+		# ".config/aerospace".source = "${homeManagerModulesPath}/aerospace";
+		# ".config/sketchybar".source = "${homeManagerModulesPath}/sketchybar";
 	};
 
 	# This is needed to ensure that the font cache is updated after the fonts are installed.

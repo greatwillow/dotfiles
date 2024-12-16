@@ -90,7 +90,7 @@
     '';
 
     # Ensures that opening nushell will point to the correct config file    
-    nu = "nu --config ~/dotfiles/nushell/config.nu";
+    nu = "nu --config ~/dotfiles/home/modules/nushell/config.nu";
 
     # Dotnet
     # # stops all dotnet processes.  NOTE: Only works in Powershell
