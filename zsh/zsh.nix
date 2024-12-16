@@ -3,7 +3,6 @@
   shellAliases,
   ...
 }: 
-
 {
 	zsh = {
 		enable = true;
@@ -28,6 +27,18 @@
 			if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
 				eval "$(oh-my-posh init zsh --config ~/dotfiles/oh-my-posh/themes/catppuccin_mocha.omp.json)"
 			fi
+
+			function refresh-pure {
+				cd ~/dotfiles/nix-darwin
+				export NIX_DEBUG=1
+				darwin-rebuild switch --flake .
+			}
+
+			function refresh {
+				cd ~/dotfiles/nix-darwin
+				export NIX_DEBUG=1
+				darwin-rebuild switch --impure --flake .
+			}
 		'';
 	};
 }

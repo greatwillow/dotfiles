@@ -6,7 +6,10 @@ alias .... = cd ../../..
 alias ..... = cd ../../../..
 alias ~ = cd ~ # `cd` is probably faster to type though
 
-alias ndarwin = cd ~/dotfiles/nix-darwin
+alias nnotes = cd "~/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/ObsidianNotes"
+alias ncomp = cd "~/Desktop/Comp\\ Sci"
+alias ndesk = cd "~/Desktop"
+alias ndarwin = cd "~/dotfiles/nix-darwin"
 
 def --env cx [arg] {
     cd $arg
@@ -20,10 +23,22 @@ alias cp = cp -v
 
 # Git
 alias gs = git status
-alias gcm = git commit -m
+alias ga = git add
 alias gaa = git add -A
+alias gcm = git commit -m
 alias gf = git fetch
+alias gco = git checkout
+alias gcob = git checkout -b 
+alias gl = git log
+alias glog = git log --oneline --graph
+alias gpr = git pull --rebase
+alias gp = git push
+alias gpf = git push --force-with-lease
 alias gss = git stash save
+alias gsl = git stash list
+alias gsp = git stash pop
+alias grm = git rebase main
+alias grc = git rebase --continue
 
 def set-xdg-home [] {
     $env.XDG_CONFIG_HOME = ($env.HOME + "/.config")
@@ -31,13 +46,13 @@ def set-xdg-home [] {
 }
 
 # Nix
-def nix-refresh [] {
+def refresh-pure [] {
     ndarwin
 	set-xdg-home
     with-env {NIX_DEBUG: "1"} { darwin-rebuild switch --flake . }
 }
 
-def nix-refresh-impure [] {
+def refresh [] {
     ndarwin
 	set-xdg-home
     with-env {NIX_DEBUG: "1"} { darwin-rebuild switch --impure --flake . }
