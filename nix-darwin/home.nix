@@ -3,6 +3,7 @@
 # See Home Manager Options at: https://nix-community.github.io/home-manager/options.xhtml
 
 { config, pkgs, lib, ... }: let
+	user = "gdenys";
 	userPath = config.home.homeDirectory;
 	dotfilesPath = "${userPath}/dotfiles";
 	rootConfigPath = "${userPath}/.config";
@@ -33,6 +34,7 @@ in
 		pkgs.carapace
 		pkgs.ripgrep
 		pkgs.fzf
+		pkgs.neovim
 	];	
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -55,6 +57,14 @@ in
 	# This is needed to ensure that the font cache is updated after the fonts are installed.
 	home.activation.updateFontCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
 		fc-cache -fv
+	'';
+
+	# Ensure the Neovim directory exists and has the correct permissions
+	home.activation.ensureNvimDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+		# TODO: The following commands are not working as expected. Need to investigate.
+		# sudo mkdir -p ${userPath}/.local/share/nvim
+		# chown ${user}:${user} ${userPath}/.local/share/nvim
+		# chmod 755 ${userPath}/.local/share/nvim
 	'';
 
 	home.sessionVariables = sessionVariables;

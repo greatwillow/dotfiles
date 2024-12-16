@@ -48,3 +48,8 @@ Here, OMP is taking the catpuccin_mocha theme config and saving it with an autog
 **Manual Steps**
 An important note here is that the `~/oh-my-posh-init.nu` file must be created manually to allow this file to be written to.  This is because there were issues making this work in nushell.  Note also that the terminal may need to be opened twice initially before the initial config takes effect.
 Also, note that the Nix installed Nerd Font may need to be set up to be used in the given terminal emulator to allow for OMP to work properly. 
+
+### NeoVim
+
+**Manual Steps**
+The folder `/Users/gdenys/.local/share/nvim` needs to be manually created for nvim to work.  Currently the activation script inside `home.nix` is not working to create this automatically.
