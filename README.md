@@ -26,6 +26,11 @@ Nix places packages in `/nix/store` and links to those on a per user basis insid
 
 and then the path `~/.nix-profile/bin` needs to be added to `$PATH`
 
+## System Names
+
+- **artemis** - The local macbook pro
+- **apollo** - The work computer
+
 ## Usage of Configured Libraries
 
 ### Nushell

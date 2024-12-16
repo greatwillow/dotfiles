@@ -3,74 +3,50 @@
 
 	inputs = {
 		nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-		nix-darwin.url = "github:LnL7/nix-darwin";
-		nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 		home-manager = {
       		url = "github:nix-community/home-manager";
       		inputs.nixpkgs.follows = "nixpkgs";
     	};
+		darwin.url = "github:lnl7/nix-darwin";
+    	darwin.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
-	outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+	outputs = inputs@{ self, nixpkgs, home-manager, darwin, ... }:
 	let
-	userPath = "/Users/gdenys";
-	dotfilesPath = "${userPath}/dotfiles";
-	configuration = { pkgs, ... }: {
-		# List packages installed in system profile. To search by name, run:
-		# $ nix-env -qaP | grep wget
-		environment.systemPackages =
-			[ 
-				pkgs.vim
-			];
-
-		services.nix-daemon.enable = true;
-		nix.settings.experimental-features = "nix-command flakes";
-		# default shell on catalina
-		programs.zsh.enable = true;  
-		# Set Git commit hash for darwin-version.
-		system.configurationRevision = self.rev or self.dirtyRev or null; 
-		system.stateVersion = 5;
-		# The platform the configuration will be used on.
-		nixpkgs.hostPlatform = "aarch64-darwin";
-		security.pam.enableSudoTouchIdAuth = true;
-		
-		# Used for backwards compatibility, please read the changelog before changing.
-		# $ darwin-rebuild changelog
-
-		users.users.gdenys.home = "/Users/gdenys";
-		home-manager.backupFileExtension = "backup";
-		nix.configureBuildUsers = true;
-		nix.useDaemon = true;
-
-		system.defaults = {
-			dock.autohide = true;
-			dock.mru-spaces = false;
-			finder.AppleShowAllExtensions = false;
-			finder.AppleShowAllFiles = true;
-			finder.FXPreferredViewStyle = "clmv";
-			loginwindow.LoginwindowText = "Welcome!";
-			screencapture.location = "~/Desktop/Screenshots";
-			screensaver.askForPasswordDelay = 10;
-		};
-    };
+		userPath = "/Users/gdenys";
+		dotfilesPath = "${userPath}/dotfiles";
+		system = builtins.currentSystem;
+		pkgs = import nixpkgs { inherit system; };
+		lib = pkgs.lib;
+		isMacOS = lib.strings.hasPrefix "aarch64-darwin" system || lib.strings.hasPrefix "x86_64-darwin" system;
+		isLinuxOS = lib.strings.hasPrefix "x86_64-linux" system;
+		isWindowsOS = lib.strings.hasPrefix "x86_64-windows" system;
+		artemisConfiguration = (import "${dotfilesPath}/hosts/artemis/default.nix" { inherit pkgs self; });
   	in
 	{
 		# Build darwin flake using:
 		# $ darwin-rebuild build --flake .#Gregorys-MacBook-Pro
-		darwinConfigurations."Gregorys-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-			system = "aarch64-darwin";	
-			modules = [ 
-				configuration
-				home-manager.darwinModules.home-manager 
-				{
-					home-manager.useGlobalPkgs = true;
-					home-manager.useUserPackages = true;
-					home-manager.users.gdenys = import "${dotfilesPath}/home/default.nix";
-				}
-			];
+		darwinConfigurations = {
+			artemis = darwin.lib.darwinSystem {
+				system = "x86_64-darwin";
+				modules = [ 
+					artemisConfiguration
+					home-manager.darwinModules.home-manager 
+					{
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.users.gdenys = import "${dotfilesPath}/home/default.nix";
+					}
+				];
+			};
 		};
 
 		# Expose the package set, including overlays, for convenience.
-    	darwinPackages = self.darwinConfigurations."Gregorys-MacBook-Pro".pkgs;
-	};
+    	darwinPackages = self.darwinConfigurations.artemis.pkgs;
+
+		defaultPackage.${system} = if isMacOS then self.darwinConfigurations.artemis
+			# else if isLinuxOS then nixosConfigurations.my-linux-config
+			# else if isWindowsOS then windowsConfigurations.my-windows-config
+			else throw "Unsupported system: ${system}";
+		};
 }
