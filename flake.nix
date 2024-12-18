@@ -13,13 +13,14 @@
 
 	outputs = inputs@{ self, nixpkgs, home-manager, darwin, ... }:
 	let
+		inherit (self) outputs;
 		artemisUser = "gdenys";
-		apolloUser = "GregoryDenys";
+		apolloUser = "gdenys";
 		artemisUserPath = "/Users/${artemisUser}";
-		apolloUserPath = "/c/Users/${apolloUser}";
+		apolloUserPath = "/mnt/c/Users/GregoryDenys";
 		artemisDotfilesPath = "${artemisUserPath}/dotfiles";
 		apolloDotfilesPath = "${apolloUserPath}/dotfiles";
-		system = builtins.currentSystem;
+		system = if builtins.hasAttr "currentSystem" builtins then builtins.currentSystem else "x86_64-linux";
 		pkgs = import nixpkgs { inherit system; };
 		lib = {
 			inherit (pkgs.lib) strings;
@@ -55,29 +56,23 @@
 		};
 
 		nixosConfigurations = {
-			my-linux-config = nixpkgs.lib.nixosSystem {
-				system = "x86_64-linux";
-				modules = [
-				apolloConfiguration
-				home-manager.nixosModules.home-manager
-				{
-					home-manager.useGlobalPkgs = true;
-					home-manager.useUserPackages = true;
-					home-manager.users.gdenys = (
-						import "${apolloDotfilesPath}/home/default.nix" { 
-							config = apolloConfiguration; 
-							inherit pkgs lib; 
-							homeUsername = apolloUser; 
-							homePath = apolloUserPath; 
-						}
-					);
-				}
-				];
+			nixos = nixpkgs.lib.nixosSystem {
+				specialArgs = {inherit inputs outputs;};
+				modules = ["${apolloDotfilesPath}/hosts/apollo/default.nix"];
 			};
 		};
 
-		defaultPackage.${system} = if isMacOS then self.darwinConfigurations.artemis
-			else if isLinuxOS then self.nixosConfigurations.my-linux-config
-			else throw "Unsupported system: ${system}";
+		homeConfigurations = {
+			"gdenys@nixos" = home-manager.lib.homeManagerConfiguration {
+				pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+				extraSpecialArgs = {inherit inputs outputs;};
+				modules = ["${apolloDotfilesPath}/home/linux/home.nix"];
+			};
+			"gdenys@PF-B58J3T3" = home-manager.lib.homeManagerConfiguration {
+				pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+				extraSpecialArgs = {inherit inputs outputs;};
+				modules = ["${apolloDotfilesPath}/home/linux/home.nix"];
+			};
 		};
+	};
 }
