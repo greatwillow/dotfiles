@@ -3,6 +3,8 @@ My personal home configurations
 
 ## Usage
 
+### Darwin/Mac
+
 1. To make updates to the system after modifying a flake:
    
 ```bash
@@ -15,6 +17,178 @@ My personal home configurations
 ```bash
 % cd ./nix-darwin 
 % NIX_DEBUG=1 darwin-rebuild switch --flake .
+```
+
+### WSL/Windows - Other Distro
+
+For WSL/Windows, if we use another distro, such as Ubuntu, we need to do the following:
+
+#### Setup User and Login
+- Find Linux Distro that want to use: `wsl -l -v`
+- Login without particular user (will be root) `wsl -d Ubuntu-20.04`
+- Add  user that corresponds to root folder (ie. `gdenys`) and add user to the sudoers file
+
+```bash
+# Add a new user with a specific home directory
+sudo adduser --home /mnt/c/Users/MyUser myuser
+
+# Open the sudoers file to add the user to the sudoers list
+sudo visudo
+# Add the following line in the sudoers file:
+# myuser ALL=(ALL) ALL
+
+# Change the ownership of the home directory to the new user
+sudo chown -R myuser:myuser /mnt/c/Users/MyUser
+
+# Add the user to the nix-users group (if necessary)
+sudo usermod -aG nix-users myuser
+
+# Switch to new user
+su - myuser
+
+# Run a command with sudo to verify access:
+sudo whoami  # Output should be root, indicating that the user has sudo privileges.
+```
+
+#### Login with new user
+- Find Linux Distro that want to use: `wsl -l -v`
+- Login to WSL with that user ie. `wsl -d Ubuntu-20.04 -u gdenys`
+
+#### Install Nix
+
+The Windows installation instructions can be found [here](https://nixos.org/download/#nix-install-windows).  Upon last check, the following script could be run to install Nix as a multi-user installation:
+
+```bash
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+#### Install Home-Manager
+
+Home-manager needs to be installed in this case using the standalone method described [here](https://nix-community.github.io/home-manager/index.xhtml#sec-install-standalone)
+
+#### Setup Nix Daemon
+
+For multi-user installation, a Nix Daemon needs to be run.  Normally this is automated by Nix via the above script, however, there are issues with this in WSL and the following needs to be completed:
+
+**Step 1: Create a Nix Daemon Service Script**
+
+1. Create a new script file, for example, start-nix-daemon.sh:
+```bash
+sudo vim /usr/local/bin/start-nix-daemon.sh
+```
+2. Add the following content to the script:
+```bash
+#!/bin/sh
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+sudo /nix/var/nix/profiles/default/bin/nix-daemon &
+```
+3. Save the file and exit the editor.
+4. Make the script executable:
+```bash
+sudo chmod +x /usr/local/bin/start-nix-daemon.sh
+```
+
+**Step 2: Start the Nix Daemon Manually**
+```vim
+sudo /usr/local/bin/start-nix-daemon.sh
+```
+
+**Step 3: Add the Script to Your Shell Configuration**
+Add the following line to the `~/.zshrc` file:
+```bash
+/usr/local/bin/start-nix-daemon.sh
+```
+
+#### Refresh Command
+   
+```zsh 
+% home-manager switch -b backup -f /mnt/c/Users/GregoryDenys/dotfiles/home/linux/home.nix
+```
+
+### WSL/NixOS
+
+After Downloading and Installing NixOS as a WSL distribution, login to NixOS with `wsl -d NixOS` and do the following:
+
+#### Setup User and Login
+
+**Step 1: Edit the NixOS Configuration File**
+1. Open the NixOS configuration file:
+```bash
+sudo nano /etc/nixos/configuration.nix
+```
+2. Add a new user configuration to the file. For example, to add a user myuser with a specific home directory and sudo privileges, add the following lines:
+```nix
+{ config, pkgs, ... }:
+
+{
+  # Other configurations...
+
+  users.users.myuser = {
+    isNormalUser = true;
+    home = "/mnt/c/Users/MyUser";
+    extraGroups = [ "wheel" ];  # Add to the wheel group for sudo access
+    shell = pkgs.zsh;  # Set the default shell to zsh
+  };
+
+  # Allow members of the wheel group to use sudo
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;  # Set to true if you want to require a password
+  };
+
+  # Other configurations...
+}
+```
+**Step 2: Rebuild and Finish User Setup**
+```bash
+sudo nixos-rebuild switch
+
+# Set a password for the user
+sudo passwd myuser
+
+# Switch to the user
+su - myuser
+
+# Run a command with sudo to verify access:
+sudo whoami  # Output should be root, indicating that the user has sudo privileges.
+```
+
+#### Add Nix Experimental Features to Config
+1. Make sure that flakes are enabled in your Nix configuration. Add the following lines to your /etc/nixos/configuration.nix:
+```nix
+{
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+}
+```
+2. `sudo nixos-rebuild switch`
+
+#### Run Flake Command
+1. Navigate to the directory containing your flake.nix file:
+```bash
+cd /path/to/your/flake
+```
+2. Run the nixos-rebuild command with the --flake option:
+```bash
+sudo nixos-rebuild switch --flake .
+```
+
+## Nix Packages Garbage Cleanup
+
+```bash
+sudo nix-collect-garbage --delete-older-than 15d
+```
+
+## Nix Flake Creation from Template
+
+```bash
+sudo nix flake init --template github:vimjoyer/flake-starter-config
 ```
 
 ## Nix Package Location
