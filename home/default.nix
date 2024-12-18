@@ -5,7 +5,7 @@
 { config, pkgs, lib, homeUsername, homePath, ... }: let
 	dotfilesPath = "${homePath}/dotfiles";
 	homeManagerModulesPath = "${dotfilesPath}/home/modules";
-	rootConfigPath = "${homeUsername}/.config";
+	rootConfigPath = "${homePath}/.config";
 	customPosixScriptsPath = "${homeManagerModulesPath}/_common/posix_custom_scripts";
 	osType = builtins.currentSystem;
 	isMacOS = lib.strings.hasPrefix "x86_64-darwin" osType;
