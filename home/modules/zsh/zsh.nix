@@ -1,6 +1,6 @@
 {
-  pkgs,
-  shellAliases,
+  	pkgs,
+  	shellAliases,
 	homeManagerModulesPath,
   ...
 }: 
@@ -24,7 +24,7 @@
 				"zsh-users/zsh-autosuggestions"
 				"jeffreytse/zsh-vi-mode"
 		];	
-		initExtra = ''
+		initExtra = builtins.replaceStrings ["\r\n"] ["\n"] ''
 			if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
 				eval "$(oh-my-posh init zsh --config ${homeManagerModulesPath}/oh-my-posh/themes/catppuccin_mocha.omp.json)"
 			fi
