@@ -49,6 +49,9 @@
 								homePath = apolloUserPath; 
 							});
 		apolloHomeFile = "${apolloHostPath}/home.nix";
+		experimentalFeaturesModule = {
+			nix.settings.experimental-features = [ "nix-command" "flakes" ];
+		};
   	in
 	{
 		darwinConfigurations = {
@@ -77,12 +80,18 @@
 			"gdenys@nixos" = home-manager.lib.homeManagerConfiguration {
 				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
-				modules = [apolloHomeFile];
+				modules = [
+					apolloHomeFile
+					experimentalFeaturesModule
+				];
 			};
 			"gdenys@PF-B58J3T3" = home-manager.lib.homeManagerConfiguration {
 				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
-				modules = [apolloHomeFile];
+				modules = [
+					apolloHomeFile
+					experimentalFeaturesModule
+				];
 			};
 		};
 	};
