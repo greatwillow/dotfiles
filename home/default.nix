@@ -4,7 +4,7 @@
 
 { config, pkgs, lib, homeUsername, homePath, ... }: let
 	dotfilesPath = "${homePath}/dotfiles";
-	homeManagerModulesPath = "${dotfilesPath}/home/modules";
+	homeManagerModulesPath = "${dotfilesPath}/homeManagerModules";
 	rootConfigPath = "${homePath}/.config";
 	customPosixScriptsPath = "${homeManagerModulesPath}/_common/posix_custom_scripts";
 	osType = builtins.currentSystem;

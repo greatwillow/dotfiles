@@ -3,10 +3,10 @@
 # version = "0.95.0"
 
 # # Import aliases
-source ~/dotfiles/home/modules/nushell/aliases.nu
+source ~/dotfiles/homeManagerModules/nushell/aliases.nu
 
 # Import themes
-source ~/dotfiles/home/modules/nushell/themes.nu
+source ~/dotfiles/homeManagerModules/nushell/themes.nu
 
 $env.config = {
     show_banner: false
