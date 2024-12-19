@@ -10,6 +10,9 @@
     # -------------------- Shell --------------------
     edit = "vim ~/dotfiles/nix-darwin/home.nix";
 
+    apollo-refresh = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-BF58J3T3 --impure";
+    artemis-refresh = "NIX_DEBUG=1 darwin-rebuild switch --flake $HOME/dotfiles/flake.nix#artemis --impure";
+
     # -------------------- Navigation --------------------
     ".." = "cd ..";
     "cd.." = "cd ..";
