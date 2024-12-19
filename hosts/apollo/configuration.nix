@@ -23,7 +23,7 @@
 		# ./users.nix
 
 		# Import your generated (nixos-generate-config) hardware configuration
-		./hardware-configuration.nix
+		./hardware_configuration.nix
 		# include NixOS-WSL modules
 		<nixos-wsl/modules>
 	];
