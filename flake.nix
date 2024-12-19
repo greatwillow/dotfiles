@@ -58,6 +58,7 @@
   	in
 	{
 		darwinConfigurations = {
+			# Corresponds to the Personal MacOS
 			artemis = darwin.lib.darwinSystem {
 				system = "x86_64-darwin";
 				modules = [ 
@@ -72,6 +73,7 @@
 			};
 		};
 
+		# Corresponds to the NixOS Work System - Not yet operational
 		nixosConfigurations = {
 			nixos = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs outputs;};
@@ -80,6 +82,7 @@
 		};
 
 		homeConfigurations = {
+			# Corresponds to the NixOS Work System - Not yet operational
 			"gdenys@nixos" = home-manager.lib.homeManagerConfiguration {
 				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
@@ -89,6 +92,7 @@
 					nixPackageModule
 				];
 			};
+			# Corresponds to the Ubuntu Work System
 			"gdenys@PF-B58J3T3" = home-manager.lib.homeManagerConfiguration {
 				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
