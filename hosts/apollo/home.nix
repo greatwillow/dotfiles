@@ -26,7 +26,9 @@ in
 
 	# Specify the desired packages to install in the user environment.
 	home.packages = with pkgs; [
-		# wezterm
+		awscli2
+		direnv
+		dos2unix
 		nushell
 		zsh
 		oh-my-posh
