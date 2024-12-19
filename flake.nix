@@ -52,6 +52,9 @@
 		experimentalFeaturesModule = {
 			nix.settings.experimental-features = [ "nix-command" "flakes" ];
 		};
+		nixPackageModule = {
+			nix.package = pkgs.nix;
+		};
   	in
 	{
 		darwinConfigurations = {
@@ -83,6 +86,7 @@
 				modules = [
 					apolloHomeFile
 					experimentalFeaturesModule
+					nixPackageModule
 				];
 			};
 			"gdenys@PF-B58J3T3" = home-manager.lib.homeManagerConfiguration {
@@ -91,6 +95,7 @@
 				modules = [
 					apolloHomeFile
 					experimentalFeaturesModule
+					nixPackageModule
 				];
 			};
 		};
