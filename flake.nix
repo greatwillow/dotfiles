@@ -17,7 +17,7 @@
 		artemisUser = "gdenys";
 		apolloUser = "gdenys";
 		artemisUserPath = "/Users/${artemisUser}";
-		apolloUserPath = "/mnt/c/Users/GregoryDenys";
+		apolloUserPath = "/home/${apolloUser}";
 		artemisDotfilesPath = "${artemisUserPath}/dotfiles";
 		apolloDotfilesPath = "${apolloUserPath}/dotfiles";
 		system = if builtins.hasAttr "currentSystem" builtins then builtins.currentSystem else "x86_64-linux";
@@ -29,27 +29,38 @@
 		isMacOS = lib.strings.hasPrefix "aarch64-darwin" system || lib.strings.hasPrefix "x86_64-darwin" system;
 		isLinuxOS = lib.strings.hasPrefix "x86_64-linux" system;
 		isWindowsOS = lib.strings.hasPrefix "x86_64-windows" system;
-		artemisConfiguration = (import "${artemisDotfilesPath}/hosts/artemis/configuration.nix" { inherit pkgs self; homePath = artemisUserPath; });
-		apolloConfiguration = (import "${apolloDotfilesPath}/hosts/apollo/configuration.nix" { inherit pkgs self; homePath = apolloUserPath; });
+		artemisHostPath = "${artemisDotfilesPath}/hosts/artemis";
+		artemisConfigurationFile = (
+							import "${artemisHostPath}/configuration.nix" { 
+								inherit pkgs self; 
+								homePath = artemisUserPath; 
+							});
+		artemisHomeFile = (
+							import "${artemisHostPath}/home.nix" { 
+								config = artemisConfigurationFile; 
+								inherit pkgs lib; 
+								homeUsername = artemisUser; 
+								homePath = artemisUserPath; 
+							});
+		apolloHostPath = "${apolloDotfilesPath}/hosts/apollo";
+		apolloConfigurationFile = (
+							import "${apolloHostPath}/configuration.nix" { 
+								inherit pkgs self; 
+								homePath = apolloUserPath; 
+							});
+		apolloHomeFile = "${apolloHostPath}/home.nix";
   	in
 	{
 		darwinConfigurations = {
 			artemis = darwin.lib.darwinSystem {
 				system = "x86_64-darwin";
 				modules = [ 
-					artemisConfiguration
+					artemisConfigurationFile
 					home-manager.darwinModules.home-manager 
 					{
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
-						home-manager.users.gdenys = (
-							import "${artemisDotfilesPath}/home/default.nix" { 
-								config = artemisConfiguration; 
-								inherit pkgs lib; 
-								homeUsername = artemisUser; 
-								homePath = artemisUserPath; 
-							}
-						);
+						home-manager.users.gdenys = artemisHomeFile;
 					}
 				];
 			};
@@ -58,20 +69,20 @@
 		nixosConfigurations = {
 			nixos = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs outputs;};
-				modules = [apolloConfiguration];
+				modules = [apolloConfigurationFile];
 			};
 		};
 
 		homeConfigurations = {
 			"gdenys@nixos" = home-manager.lib.homeManagerConfiguration {
-				pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
-				modules = ["${apolloDotfilesPath}/home/linux/home.nix"];
+				modules = [apolloHomeFile];
 			};
 			"gdenys@PF-B58J3T3" = home-manager.lib.homeManagerConfiguration {
-				pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+				pkgs = nixpkgs.legacyPackages.x86_64-linux;
 				extraSpecialArgs = {inherit inputs outputs;};
-				modules = ["${apolloDotfilesPath}/home/linux/home.nix"];
+				modules = [apolloHomeFile];
 			};
 		};
 	};

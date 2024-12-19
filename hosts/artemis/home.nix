@@ -19,12 +19,12 @@ in
 	home.username = homeUsername;
 	home.homeDirectory = homePath;
 	# Define the state version, which corresponds to the version of Home Manager
-  	# you are using. This should be updated whenever you update Home Manager.
+  # you are using. This should be updated whenever you update Home Manager.
 	home.stateVersion = "23.05";
 
 	# Specify the desired packages to install in the user environment.
 	home.packages = with pkgs; [
-		wezterm
+		# wezterm
 		nushell
 		zsh
 		oh-my-posh
