@@ -1,10 +1,11 @@
 {
-	pkgs,
-	shellAliases,
-	...
+		pkgs,
+		shellAliases,
+		homeManagerModulesPath,
+		...
 }: {
-	bash = {
-		enable = true;
-		shellAliases = shellAliases;
-	};
+		bash = {
+			enable = true;
+			shellAliases = shellAliases;
+		};
 }

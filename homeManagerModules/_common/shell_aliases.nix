@@ -5,13 +5,17 @@
   ...
 }: let
     editor = "nvim";
+    apolloRefreshCommand = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-B58J3T3";
+    artemisRefreshCommand = "NIX_DEBUG=1 darwin-rebuild switch --flake $HOME/dotfiles/flake.nix#artemis";
     shellAliases = {
 
     # -------------------- Shell --------------------
     edit = "vim ~/dotfiles/nix-darwin/home.nix";
 
-    apollo-refresh = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-BF58J3T3 --impure";
-    artemis-refresh = "NIX_DEBUG=1 darwin-rebuild switch --flake $HOME/dotfiles/flake.nix#artemis --impure";
+    apollo-refresh-pure = "${apolloRefreshCommand}";
+    apollo-refresh = "${apolloRefreshCommand} --impure";
+    artemis-refresh-pure = "${artemisRefreshCommand}";
+    artemis-refresh = "${artemisRefreshCommand} --impure";
 
     # -------------------- Navigation --------------------
     ".." = "cd ..";

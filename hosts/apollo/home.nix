@@ -116,7 +116,7 @@ in
 			enableBashIntegration = true;
 			enableNushellIntegration = true;
 		};
-		bash = (import "${homeManagerModulesPath}/bash/bash.nix" { inherit pkgs shellAliases; }).bash;
+		bash = (import "${homeManagerModulesPath}/bash/bash.nix" { inherit pkgs shellAliases homeManagerModulesPath; }).bash;
 		zsh = (import "${homeManagerModulesPath}/zsh/zsh.nix" { inherit pkgs shellAliases homeManagerModulesPath; }).zsh;
 		nushell = {
 			enable = true;
