@@ -29,8 +29,8 @@
 		isMacOS = lib.strings.hasPrefix "aarch64-darwin" system || lib.strings.hasPrefix "x86_64-darwin" system;
 		isLinuxOS = lib.strings.hasPrefix "x86_64-linux" system;
 		isWindowsOS = lib.strings.hasPrefix "x86_64-windows" system;
-		artemisConfiguration = (import "${artemisDotfilesPath}/hosts/artemis/default.nix" { inherit pkgs self; homePath = artemisUserPath; });
-		apolloConfiguration = (import "${apolloDotfilesPath}/hosts/apollo/default.nix" { inherit pkgs self; homePath = apolloUserPath; });
+		artemisConfiguration = (import "${artemisDotfilesPath}/hosts/artemis/configuration.nix" { inherit pkgs self; homePath = artemisUserPath; });
+		apolloConfiguration = (import "${apolloDotfilesPath}/hosts/apollo/configuration.nix" { inherit pkgs self; homePath = apolloUserPath; });
   	in
 	{
 		darwinConfigurations = {
@@ -58,7 +58,7 @@
 		nixosConfigurations = {
 			nixos = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs outputs;};
-				modules = ["${apolloDotfilesPath}/hosts/apollo/default.nix"];
+				modules = [apolloConfiguration];
 			};
 		};
 
