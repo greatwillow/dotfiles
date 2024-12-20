@@ -24,7 +24,7 @@ in
 
 	# Specify the desired packages to install in the user environment.
 	home.packages = with pkgs; [
-		# wezterm
+		zellij
 		nushell
 		zsh
 		oh-my-posh
@@ -79,6 +79,11 @@ in
 	programs = {
 		home-manager = {
 			enable = true;
+		};	
+		zellij = {
+			enable = true;
+			enableBashIntegration = true;
+			enableZshIntegration = true;
 		};	
 		bat = {
 			enable = true;
