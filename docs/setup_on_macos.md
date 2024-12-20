@@ -33,6 +33,6 @@ git clone https://github.com/greatwillow/dotfiles.git
 2. If needing to debug the flake, add NIX_DEBUG=1. Note that running the following command without the `switch` statement will terminate the execution.  This is useful for debugging purposes.
 
 ```bash
-% cd ./nix-darwin 
+% cd ~/dotfiles 
 % NIX_DEBUG=1 darwin-rebuild switch --flake .
 ```

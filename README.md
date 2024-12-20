@@ -26,3 +26,7 @@ Additional information needed for specific modules is found here below:
 - [NeoVim](./docs/module_notes_neovim.md)
 - [NuShell](./docs/module_notes_nushell.md)
 - [Oh My Posh](./docs/module_notes_oh_my_posh.md)
+
+### Setting up Folder Level Dev Envs
+
+See [here](./docs/setup_folder_level_dev_envs.md)
