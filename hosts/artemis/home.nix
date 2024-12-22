@@ -76,7 +76,7 @@ in
     # ".config/ghostty".source = "${homeManagerModulesPath}/ghostty";
     # ".config/aerospace".source = "${homeManagerModulesPath}/aerospace";
     # ".config/sketchybar".source = "${homeManagerModulesPath}/sketchybar";
-    # ".config/zellij".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerModulesPath}/zellij";
+    ".config/zellij".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerModulesPath}/zellij";
     # ".config/zellij".source = "${homeManagerModulesPath}/zellij";
   };
 
