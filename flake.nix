@@ -30,34 +30,22 @@
       system =
         if builtins.hasAttr "currentSystem" builtins then builtins.currentSystem else "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      lib = {
-        inherit (pkgs.lib) strings;
-        inherit (home-manager.lib) hm;
-        inherit (home-manager.lib) file;
-      };
       artemisHostPath = "${artemisDotfilesPath}/hosts/artemis";
+      artemisHomeFile = "${artemisHostPath}/home.nix";
       artemisConfigurationFile = (
         import "${artemisHostPath}/configuration.nix" {
           inherit pkgs self;
           homePath = artemisUserPath;
         }
       );
-      artemisHomeFile = (
-        import "${artemisHostPath}/home.nix" {
-          config = artemisConfigurationFile;
-          inherit pkgs lib;
-          homeUsername = artemisUser;
-          homePath = artemisUserPath;
-        }
-      );
       apolloHostPath = "${apolloDotfilesPath}/hosts/apollo";
+      apolloHomeFile = "${apolloHostPath}/home.nix";
       apolloConfigurationFile = (
         import "${apolloHostPath}/configuration.nix" {
           inherit pkgs self;
           homePath = apolloUserPath;
         }
       );
-      apolloHomeFile = "${apolloHostPath}/home.nix";
       experimentalFeaturesModule = {
         nix.settings.experimental-features = [
           "nix-command"

@@ -1,13 +1,13 @@
-
 {
   pkgs,
   homeManagerModulesPath,
   ...
-}: let
-    editor = "nvim";
-    apolloRefreshCommand = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-B58J3T3";
-    artemisRefreshCommand = "NIX_DEBUG=1 darwin-rebuild switch --flake $HOME/dotfiles/flake.nix#artemis";
-    shellAliases = {
+}:
+let
+  editor = "nvim";
+  apolloRefreshCommand = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-B58J3T3";
+  artemisRefreshCommand = "NIX_DEBUG=1 darwin-rebuild switch -b backup --flake $HOME/dotfiles/flake.nix#artemis";
+  shellAliases = {
 
     # -------------------- Shell --------------------
     edit = "vim ~/dotfiles/nix-darwin/home.nix";
@@ -78,13 +78,13 @@
     # Zellij
     zel = "${pkgs.zellij}/bin/zellij";
 
-    # npm 
+    # npm
     list-npm-globals = "npm list -g --depth=0"; # List out all globally installed npm packages
 
     # pnpm
     rw = "pnpm webpack";
     rww = "pnpm webpack-watch";
-    red= " pnpm execute-development";
+    red = " pnpm execute-development";
     redw = "pnpm execute-development-watch";
     rs = "pnpm storybook";
     ee = "vim \"$APPDATA/espanso/match/base.yml\"";
@@ -92,12 +92,13 @@
     psa = "pnpm start:all";
     pt = "pnpm test";
     ptd = ''
-        function ptd() {
-            pnpm test:code --dir "$1"
-        }
+      
+                          function ptd() {
+                              pnpm test:code --dir "$1"
+                          }
     '';
 
-    # Ensures that opening nushell will point to the correct config file    
+    # Ensures that opening nushell will point to the correct config file
     nu = "nu --config ${homeManagerModulesPath}/nushell/config.nu";
 
     # Dotnet
@@ -113,17 +114,17 @@
     gs = "git status";
     ga = "git add";
     gaa = "git add -A";
-    gcm = "git commit -m"; 
+    gcm = "git commit -m";
     gf = "git fetch";
-    gco = "git checkout"; 
-    gcob = "git checkout -b"; 
+    gco = "git checkout";
+    gcob = "git checkout -b";
     gl = "git log";
     glog = "git log --oneline --graph";
     gbl = "git branch --list";
     gpr = "git pull --rebase";
     gp = "git push";
     gpf = "git push --force-with-lease";
-    gss = "git stash save"; 
+    gss = "git stash save";
     gsl = "git stash list";
     gsp = "git stash pop";
     grm = "git rebase main";
@@ -213,15 +214,16 @@
     # gpl = "git pull";
     # gpu = "git push upstream";
     # gpv = "git push --verbose";
-    
+
     # # checks for any files flagged w/ --skip-worktree alias
     # alias checkskip="git ls-files -v|grep '^S'"
-            
+
     # # add --skip-worktree flag to file
     # skip() {  git update-index --skip-worktree "$@";  git status; }
     # # remove --skip-worktree flag from file
     # unskip() {  git update-index --no-skip-worktree "$@";  git status; }
-};
-in {
-    shellAliases = shellAliases;
+  };
+in
+{
+  shellAliases = shellAliases;
 }

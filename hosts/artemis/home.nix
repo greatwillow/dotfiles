@@ -6,11 +6,11 @@
   config,
   pkgs,
   lib,
-  homeUsername,
-  homePath,
   ...
 }:
 let
+  homeUsername = "gdenys";
+  homePath = "/Users/${homeUsername}";
   dotfilesPath = "${homePath}/dotfiles";
   homeManagerModulesPath = "${dotfilesPath}/homeManagerModules";
   rootConfigPath = "${homePath}/.config";
@@ -40,7 +40,7 @@ in
   home.homeDirectory = homePath;
   # Define the state version, which corresponds to the version of Home Manager
   # you are using. This should be updated whenever you update Home Manager.
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # Specify the desired packages to install in the user environment.
   home.packages = with pkgs; [
@@ -81,10 +81,7 @@ in
   };
 
   # This is needed to ensure that the font cache is updated after the fonts are installed.
-  home.activation.updateFontCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    
-      	fc-cache -fv
-  '';
+  home.activation.updateFontCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''fc-cache -fv'';
 
   # Ensure the Neovim directory exists and has the correct permissions
   # home.activation.ensureNvimDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
