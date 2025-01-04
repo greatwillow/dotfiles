@@ -67,6 +67,8 @@ let
     # -------------------- Shell --------------------
     # Reload the shell (i.e. invoke as a login shell)
     reload = "exec ${builtins.getEnv "SHELL"} -l";
+    # Shows the shell of the current process whereas echo $SHELL shows the default login shell
+    shell = "ps -p $$ -o comm=";
 
     # -------------------- Editor --------------------
     vim = "${editor}"; # use neovim instead of vim
@@ -93,9 +95,11 @@ let
     pt = "pnpm test";
     ptd = ''
       
-                          function ptd() {
-                              pnpm test:code --dir "$1"
-                          }
+            
+                  
+                                      function ptd() {
+                                          pnpm test:code --dir "$1"
+                                      }
     '';
 
     # Ensures that opening nushell will point to the correct config file
