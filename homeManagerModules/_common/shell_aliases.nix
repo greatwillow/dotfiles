@@ -6,7 +6,7 @@
 let
   editor = "nvim";
   apolloRefreshCommand = "home-manager switch -b backup --extra-experimental-features 'nix-command' --extra-experimental-features 'flakes' --flake $HOME/dotfiles/flake.nix#gdenys@PF-B58J3T3";
-  artemisRefreshCommand = "NIX_DEBUG=1 darwin-rebuild switch -b backup --flake $HOME/dotfiles/flake.nix#artemis";
+  artemisRefreshCommand = "NIX_DEBUG=1 darwin-rebuild switch --flake $HOME/dotfiles/flake.nix";
   shellAliases = {
 
     # -------------------- Shell --------------------
@@ -97,9 +97,12 @@ let
       
             
                   
-                                      function ptd() {
-                                          pnpm test:code --dir "$1"
-                                      }
+                        
+                              
+                                    
+                                                        function ptd() {
+                                                            pnpm test:code --dir "$1"
+                                                        }
     '';
 
     # Ensures that opening nushell will point to the correct config file

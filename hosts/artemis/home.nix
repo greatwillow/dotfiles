@@ -59,6 +59,7 @@ in
     ripgrep
     fzf
     neovim
+    devbox
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -78,6 +79,7 @@ in
     # ".config/sketchybar".source = "${homeManagerModulesPath}/sketchybar";
     ".config/zellij".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerModulesPath}/zellij";
     # ".config/zellij".source = "${homeManagerModulesPath}/zellij";
+    # ".config/neovim".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/neovim";
   };
 
   # This is needed to ensure that the font cache is updated after the fonts are installed.
@@ -151,9 +153,9 @@ in
         source = "${homeManagerModulesPath}/nushell/config.nu";
       };
     };
-    # neovim = {
-    # 	enable = true;
-    # 	# plugins = with pkgs.vimPlugins; [];
-    # };
+    # neovim =
+    #   (import "${homeManagerModulesPath}/neovim/neovim.nix" {
+    #     inherit pkgs shellAliases homeManagerModulesPath;
+    #   }).neovim;
   };
 }
